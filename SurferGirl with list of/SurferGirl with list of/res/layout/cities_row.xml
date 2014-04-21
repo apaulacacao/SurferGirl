@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="150dp"
+    android:background="@drawable/card">
+
+
+    <TextView
+        android:id="@+id/timeStamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:paddingTop="15dp"
+        android:textSize="15sp"
+        android:text="date: N/A"
+        android:layout_alignLeft="@+id/windSpeed"
+
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/circle2"
+        android:layout_alignBottom="@+id/timeStamp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:layout_toRightOf="@+id/timeStamp"
+        />
+
+    <TextView
+        android:id="@+id/WaveHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:paddingLeft="10dp"
+        android:text="Height N/A"
+        android:layout_below="@id/timeStamp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    <TextView
+        android:id="@+id/windSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:textSize="15sp"
+        android:paddingBottom="45dp"
+        android:layout_below="@+id/WaveHeight"
+        android:text="wind: N/A"
+        android:layout_alignLeft="@+id/WaveHeight" />
+
+
+</RelativeLayout>

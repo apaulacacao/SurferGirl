@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="country_arrays">
+        <item>ASHDOD</item>
+        <item>ASHKELON</item>
+        <item>HAIFA</item>
+        <item>BAT YAM</item>
+        <item>Beit Yanay</item>
+        <item>Caesarea</item>
+        <item>TLV - Dolphinarium</item>
+        <item>HERZELIYA</item>
+        <item>HAIFA HAZUK</item>
+        <item>HILTON TLV</item>
+        <item>HOF MARAVI</item>
+        <item>MAAGAN MICHAEL</item>
+        <item>MARINA HERZELIYA</item>
+        <item>PALMACHIM</item>
+        <item>RISHON LEZION</item>
+        <item>SDOT YAM</item>
+        <item>SIDNA ALI HERZEIYA</item>
+        <item>TEL BARUCH</item>
+        <item>TOPSY</item>
+        <item>ZIKIM</item>
+        <item>ZVULUN HERZELIYA</item>
+
+    </string-array>
+    <string name="app_name">SurferGirl</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="Ashkelon">Ashkelon</string>
+    <string name="Ashdod">Ashdod</string>
+    <string name="Haifa">Haifa</string>
+    <string name="Bat_Yam">Bat Yam</string>
+    <string name="Beit_Yanay">Beit Yanay</string>
+    <string name="Caesarea">Caesarea</string>
+    <string name="Dolphinarium">Dolphinarium - TLV</string>
+    <string name="Herzeliya">Herzeliya</string>
+    <string name="Haifa_hazuk">Haifa Hazuk</string>
+    <string name="Hilton">Hilton - TLV</string>
+    <string name="Hof_Maravi">Hof Maravi</string>
+    <string name="Maagan_Michael">Maagan Michael</string>
+    <string name="Marina_Herzeliya">Marina Herzeliya</string>
+    <string name="Palmachim">Palmachim</string>
+    <string name="Rishon_Lezion">Rishon Lezion</string>
+    <string name="Sdot_Yam">Sdot Yam</string>
+    <string name="Sidna_Ali_Herzeliya">Sidna Ali - Herzeliya</string>
+    <string name="Tel_Baruch">Tel Baruch - North</string>
+    <string name="Topsy">Topsy - TLV</string>
+    <string name="Zikim">Zikim</string>
+    <string name="Zvulun">Zvulun Herzeliya</string>
+    <string name="Wind">Wind Speed: </string>
+    <string name="WaveHeight">Waves Height: </string>
+    <string name="Date">Date: </string>
+    <string name="error">Error:</string>
+    <string name="errorData">There was a problem obtaining data. Please try again.</string>
+    <string name="errorBtnOkay">Okay</string>
+    <string name="loadingMSG"> Obtaining waves data. Please Hold.</string>
+
+    <color name="second_grey">#ffeeeeee</color>
+    <color name="card_white">#ffffffff</color>
+    <color name="card_shadow">#8c666666</color>
+
+</resources>
