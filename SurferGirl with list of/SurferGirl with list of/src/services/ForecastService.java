@@ -29,6 +29,8 @@ import volley.toolbox.Volley;
 
 /**
  * Created by Unknown1 on 4/7/14.
+ * <p/>
+ * A service class for finding matching waves height in upcoming days
  */
 public class ForecastService extends Service {
 
@@ -60,13 +62,13 @@ public class ForecastService extends Service {
                 .getDefaultSharedPreferences(getBaseContext());
         int spinnerPosition = sharedPreferences.getInt("spinnerPosition", 5);
         Log.d("POSITION", spinnerPosition + "");
-        request(spinnerPosition, getBaseContext());
+        request(getBaseContext());
         Log.d("SERVICE", "STARTED");
         stopSelf();
         return Service.START_NOT_STICKY;
     }
 
-    public void request(int position, Context context) {
+    public void request(Context context) {
 
         final Context ctx = context;
         RequestQueue rq = Volley.newRequestQueue(ctx);
@@ -136,8 +138,9 @@ public class ForecastService extends Service {
                             day = daysWithWavesMatch.get(0).getDayString();
                             distinctDays.add(daysWithWavesMatch.get(0));
 
+
                             for (int j = 0; j < daysWithWavesMatch.size(); j++) {
-                                if (day != daysWithWavesMatch.get(j).getDayString()) {
+                                if (!day.equals(daysWithWavesMatch.get(j).getDayString())) {
                                     day = daysWithWavesMatch.get(j).getDayString();
                                     distinctDays.add(daysWithWavesMatch.get(j));
 
@@ -155,7 +158,6 @@ public class ForecastService extends Service {
                             NotificationManager nm = (NotificationManager) ctx.getSystemService(NOTIFICATION_SERVICE);
                             int icon = R.drawable.ic_launcher;
                             String tickerText = distinctDays.size() + " Good days to surf!";
-                            long when = System.currentTimeMillis();
                             Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
                             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx).setSmallIcon(icon).setContentTitle(tickerText).setAutoCancel(true).setContentText(tickerText).setSound(sound);
@@ -199,7 +201,7 @@ public class ForecastService extends Service {
 
 
     private void updateDB(ArrayList<WeatherData> distinctDays) {
-
+        // insert downloaded weatherData objects into DB for later retrieval
     }
 
 
