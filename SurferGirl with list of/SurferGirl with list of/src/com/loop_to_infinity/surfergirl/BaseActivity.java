@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,9 +21,6 @@ public class BaseActivity extends FragmentActivity {
 
         final FragmentManager fm = getSupportFragmentManager();
         Magic_Spots_ID.initPlaces();
-
-        Log.d("BASE_ACTIVITY", "BASE_STARTED");
-
 
         Welcome wl = new Welcome();
         FragmentTransaction ft = fm.beginTransaction();

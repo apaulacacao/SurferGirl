@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TableLayout
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#151514">
 
     <TableRow
@@ -13,13 +12,13 @@
         android:weightSum="10">
 
         <TextView
+            android:id="@+id/setAlarms_Settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Set Alarms:"
-            android:id="@+id/setAlarms_Settings"
             android:padding="10dp"
-            android:textSize="30dp"
-            android:textColor="@color/card_white" />
+            android:text="Set Alarms:"
+            android:textColor="@color/card_white"
+            android:textSize="30dp" />
     </TableRow>
 
     <TableRow
@@ -30,15 +29,14 @@
 
 
         <CheckBox
-            android:layout_weight="5"
-            android:layout_height="wrap_content"
-            android:text="Enable Alarms"
-            android:padding="13dp"
             android:id="@+id/alarms_CheckBox"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:paddingLeft="13dp"
+            android:text="Enable Alarms"
             android:textColor="@color/card_white"
 
             />
-
 
     </TableRow>
 
@@ -62,9 +60,9 @@
 
 
         <Spinner
-            android:layout_weight="10"
-            android:layout_height="wrap_content"
             android:id="@+id/settings_spinner"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
             android:entries="@array/country_arrays"
             android:padding="2dp"
             android:spinnerMode="dropdown" />
@@ -77,31 +75,57 @@
         android:weightSum="10">
 
         <TextView
-            android:layout_weight="5"
+            android:id="@+id/IntervalLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="13dp"
+            android:text="Check Every:"
+            android:textColor="@color/card_white" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="10">
+
+        <Spinner
+            android:id="@+id/interval_spinner"
             android:layout_height="wrap_content"
-            android:text="Waves Height (in meters)"
-            android:padding="13dp"
+            android:layout_weight="10"
+            android:entries="@array/interval_array"
+            android:spinnerMode="dropdown" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="10">
+
+        <TextView
             android:id="@+id/waves_Height_Settings_Label"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:paddingLeft="13dp"
+            android:text="Waves Height (in meters)"
             android:textColor="@color/card_white" />
 
         <EditText
+            android:id="@+id/waves_Height_Settings_EditText"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:text="0.5"
             android:focusable="true"
-            android:id="@+id/waves_Height_Settings_EditText"
-            android:textColor="@color/card_white"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:text="0.5"
+            android:textColor="@color/card_white" />
 
     </TableRow>
 
 
-
     <Button
+        android:id="@+id/save_settingsBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/save_settingsBTN"
         android:text="Save" />
 </TableLayout>

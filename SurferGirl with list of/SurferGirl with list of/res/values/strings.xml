@@ -25,6 +25,14 @@
         <item>ZVULUN HERZELIYA</item>
 
     </string-array>
+    <string-array name="interval_array">
+        <item>10Min</item>
+        <item>30Min</item>
+        <item>1Hour</item>
+        <item>6Hours</item>
+        <item>12Hours</item>
+        <item>1Day</item>
+    </string-array>
     <string name="app_name">SurferGirl</string>
     <string name="action_settings">Settings</string>
 

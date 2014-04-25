@@ -12,12 +12,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -29,6 +29,7 @@ import com.loop_to_infinity.surfergirl.R;
 
 import java.text.DecimalFormat;
 
+import Adapters.MyCustomSpinnerAdapter;
 import Utilities.Magic_Spots_ID;
 import services.ForecastService;
 
@@ -47,6 +48,8 @@ public class Settings extends Fragment {
     private int visibility = 0;
     private boolean buttonVisible = false;
     private boolean enableAlarms = false;
+    private long wait = 0;
+    private long wait2 = 120000;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,34 +108,11 @@ public class Settings extends Fragment {
         // Adapter for custom spinner
 
         final String[] cities = ctx.getResources().getStringArray(R.array.country_arrays);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(ctx, android.R.layout.simple_list_item_1, cities) {
 
-
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-
-                View v = super.getView(position, convertView, parent);
-
-                ((TextView) v).setTypeface(roboto);
-                ((TextView) v).setTextColor(getResources().getColor(R.color.card_white));
-                ((TextView) v).setTextSize(13);
-                return v;
-            }
-
-
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View v = super.getDropDownView(position, convertView, parent);
-                ((TextView) v).setTypeface(roboto);
-
-
-                return v;
-            }
-
-
-        };
+        MyCustomSpinnerAdapter myCitiesAdapter = new MyCustomSpinnerAdapter(ctx, android.R.layout.simple_list_item_1, cities);
 
         final Spinner spinner = (Spinner) view.findViewById(R.id.settings_spinner);
-        spinner.setAdapter(adapter);
+        spinner.setAdapter(myCitiesAdapter);
         spinner.setSelection(spinnerPosition);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -155,6 +135,28 @@ public class Settings extends Fragment {
 
             }
         });
+
+        final String[] intervalArr = ctx.getResources().getStringArray(R.array.interval_array);
+        MyCustomSpinnerAdapter myIntervalAdapter = new MyCustomSpinnerAdapter(ctx, android.R.layout.simple_list_item_1, intervalArr);
+
+
+        // Intervals spinner
+        final Spinner interSpinner = (Spinner) view.findViewById(R.id.interval_spinner);
+        interSpinner.setAdapter(myIntervalAdapter);
+        interSpinner.setSelection(0); // Get selection from shared pref
+        interSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                wait2 = interSpinner.getSelectedItemPosition();
+                Log.d("wait2", wait2 + "");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         // Set alarm enabled/disabled
 
@@ -201,13 +203,11 @@ public class Settings extends Fragment {
                 if (alarmBox.isChecked()) {
                     AlarmManager am = (AlarmManager) ctx.getSystemService(ctx.ALARM_SERVICE);
                     int alarmType = am.RTC;
-                    long wait = 0;
-                    long wait2 = 120000;
+
                     Intent forecastIntent = new Intent(ctx, ForecastService.class);
                     forecastIntent.putExtra("position2", position);
                     PendingIntent alarmIntent = PendingIntent.getService(ctx, 10, forecastIntent, 0);
-                    am.setInexactRepeating(alarmType, wait, AlarmManager.INTERVAL_FIFTEEN_MINUTES,alarmIntent);
-//                    am.setInexactRepeating(alarmType, wait, wait2, alarmIntent);
+                    am.setInexactRepeating(alarmType, wait, AlarmManager.INTERVAL_HALF_DAY, alarmIntent);
                 }
 
                 InputMethodManager im = (InputMethodManager) ctx.getSystemService(ctx.INPUT_METHOD_SERVICE);

@@ -11,12 +11,10 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,6 +26,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
+import Adapters.MyCustomSpinnerAdapter;
 import Json.WeatherData;
 import Utilities.Magic_Spots_ID;
 import volley.RequestQueue;
@@ -86,34 +85,11 @@ public class Welcome extends Fragment {
         go.setTypeface(roboto);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(ctx, android.R.layout.simple_list_item_1, cities) {
+        MyCustomSpinnerAdapter myCitiesAdapter = new MyCustomSpinnerAdapter(ctx, android.R.layout.simple_list_item_1, cities, 26);
 
-
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-
-                View v = super.getView(position, convertView, parent);
-
-                ((TextView) v).setTypeface(roboto);
-                ((TextView) v).setTextColor(getResources().getColor(R.color.card_white));
-                ((TextView) v).setTextSize(30);
-                return v;
-            }
-
-
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View v = super.getDropDownView(position, convertView, parent);
-                ((TextView) v).setTypeface(roboto);
-
-
-                return v;
-            }
-
-
-        };
 
         final Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
-        spinner.setAdapter(adapter);
+        spinner.setAdapter(myCitiesAdapter);
         spinner.setSelection(spinnerPosition);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -138,16 +114,12 @@ public class Welcome extends Fragment {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(111111111+"", ""+spinnerPosition);
-
-
-
 
 
                 if (countSelections != 0) {
 
                     // Get correct url
-                    url = Magic_Spots_ID.getCitySpots(spinnerPosition+1);
+                    url = Magic_Spots_ID.getCitySpots(spinnerPosition + 1);
 
 
                     final ProgressDialog progressDialog = new ProgressDialog(ctx);
@@ -215,8 +187,6 @@ public class Welcome extends Fragment {
 
             }
         });
-
-
 
 
         return view;
