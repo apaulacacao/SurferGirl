@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,7 @@ public class Settings extends Fragment {
     private boolean buttonVisible = false;
     private boolean enableAlarms = false;
     private long wait = 0;
-    private long wait2 = 120000;
+    private int checkForUpdateInterval = 0;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -145,12 +144,11 @@ public class Settings extends Fragment {
         final Spinner interSpinner = (Spinner) view.findViewById(R.id.interval_spinner);
         interSpinner.setAdapter(myIntervalAdapter);
         interSpinner.setVisibility(visibility);
-        interSpinner.setSelection(0); // Get selection from shared pref
+        interSpinner.setSelection(checkForUpdateInterval); // Get selection from shared pref
         interSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                wait2 = interSpinner.getSelectedItemPosition();
-                Log.d("wait2", wait2 + "");
+                checkForUpdateInterval = interSpinner.getSelectedItemPosition();
             }
 
             @Override
@@ -218,6 +216,7 @@ public class Settings extends Fragment {
                 savePreferences("url", url);
                 savePreferences("buttonVisibility", save.isEnabled());
                 savePreferences("alarmBOX", alarmBox.isChecked());
+                savePreferences("updateInterval", interSpinner.getSelectedItemPosition());
 
                 Toast.makeText(ctx, "Saved", Toast.LENGTH_SHORT).show();
 
@@ -229,7 +228,7 @@ public class Settings extends Fragment {
                     Intent forecastIntent = new Intent(ctx, ForecastService.class);
                     forecastIntent.putExtra("position2", position);
                     PendingIntent alarmIntent = PendingIntent.getService(ctx, 10, forecastIntent, 0);
-                    am.setInexactRepeating(alarmType, wait, AlarmManager.INTERVAL_HALF_DAY, alarmIntent);
+                    am.setInexactRepeating(alarmType, 0, getIntervalByPosition(checkForUpdateInterval), alarmIntent);
                 }
 
                 InputMethodManager im = (InputMethodManager) ctx.getSystemService(ctx.INPUT_METHOD_SERVICE);
@@ -250,6 +249,7 @@ public class Settings extends Fragment {
         visibility = sharedPreferences.getInt("visibility", 8);
         buttonVisible = sharedPreferences.getBoolean("buttonVisibility", false);
         enableAlarms = sharedPreferences.getBoolean("alarmBOX", false);
+        checkForUpdateInterval = sharedPreferences.getInt("updateInterval", 0);
 
 
     }
@@ -286,5 +286,32 @@ public class Settings extends Fragment {
         editor.commit();
     }
 
+    private long getIntervalByPosition(int position) {
+
+        long returnVal = 00;
+
+
+        switch (position) {
+            case 0:
+                returnVal = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+                break;
+
+            case 1:
+                returnVal = AlarmManager.INTERVAL_HALF_HOUR;
+                break;
+            case 2:
+                returnVal = AlarmManager.INTERVAL_HOUR;
+                break;
+            case 3:
+                returnVal = AlarmManager.INTERVAL_HALF_DAY;
+                break;
+            case 4:
+                returnVal = AlarmManager.INTERVAL_DAY;
+                break;
+        }
+
+
+        return returnVal;
+    }
 }
 
