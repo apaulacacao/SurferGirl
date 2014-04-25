@@ -56,6 +56,8 @@ public class MainFragment extends android.support.v4.app.Fragment {
             days.add(wl.data.get(0).getDayString());
             days.add(wl.data.get(8).getDayString());
             days.add(wl.data.get(16).getDayString());
+            days.add(wl.data.get(24).getDayString());
+            days.add(wl.data.get(32).getDayString());
         } catch (ArrayIndexOutOfBoundsException ex) {
             Log.d(TAG, ex.getMessage());
         }
@@ -65,12 +67,12 @@ public class MainFragment extends android.support.v4.app.Fragment {
         List<item> items = new ArrayList<item>();
 
 
-        for (int i = 0; i < 24; i++) {
+        for (int i = 0; i < 39; i++) {
             if (i % 8 == 0) {
                 items.add(new Header(ctx, inflater, days.get(daysCount)));
 
                 items.add(new List_Item(ctx, inflater, wl.data.get(i).getWavesHeight(), wl.data.get(i).getWindSpeed(), wl.data.get(i).getCurrentDayTimeStamp(), wl.data.get(i).getRawMinimumWavesHeight()));
-                if (daysCount < 2) {
+                if (daysCount < 5) {
                     daysCount++;
                 }
 

@@ -43,7 +43,7 @@ public class Settings extends Fragment {
     private Context ctx;
     private Typeface roboto;
     private int count = 0;
-    private double wavesHeightGlobal = 0.0;
+    private double wavesHeightGlobal = 0.5;
     private int spinnerPosition = 0;
     private int visibility = 0;
     private boolean buttonVisible = false;
@@ -113,6 +113,7 @@ public class Settings extends Fragment {
 
         final Spinner spinner = (Spinner) view.findViewById(R.id.settings_spinner);
         spinner.setAdapter(myCitiesAdapter);
+        spinner.setVisibility(visibility);
         spinner.setSelection(spinnerPosition);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -143,6 +144,7 @@ public class Settings extends Fragment {
         // Intervals spinner
         final Spinner interSpinner = (Spinner) view.findViewById(R.id.interval_spinner);
         interSpinner.setAdapter(myIntervalAdapter);
+        interSpinner.setVisibility(visibility);
         interSpinner.setSelection(0); // Get selection from shared pref
         interSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -158,6 +160,10 @@ public class Settings extends Fragment {
         });
 
 
+        final TextView checkEvery = (TextView) view.findViewById(R.id.IntervalLabel);
+        checkEvery.setTypeface(roboto);
+        checkEvery.setVisibility(visibility);
+
         // Set alarm enabled/disabled
 
         final CheckBox alarmBox = (CheckBox) view.findViewById(R.id.alarms_CheckBox);
@@ -172,6 +178,22 @@ public class Settings extends Fragment {
                     PendingIntent sender = PendingIntent.getService(ctx, 10, stopAlarm, 0);
                     AlarmManager am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
                     am.cancel(sender);
+
+                    visibility = View.GONE;
+                    wavesHeight.setVisibility(visibility);
+                    wavesHeight_Edit.setVisibility(visibility);
+                    spinner.setVisibility(visibility);
+                    checkEvery.setVisibility(visibility);
+                    interSpinner.setVisibility(visibility);
+
+                } else if (((CheckBox) v).isChecked()) {
+                    visibility = View.VISIBLE;
+                    wavesHeight.setVisibility(visibility);
+                    wavesHeight_Edit.setVisibility(visibility);
+                    spinner.setVisibility(visibility);
+                    checkEvery.setVisibility(visibility);
+                    interSpinner.setVisibility(visibility);
+
                 }
             }
         });
@@ -223,8 +245,8 @@ public class Settings extends Fragment {
 
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(ctx);
-        wavesHeightGlobal = sharedPreferences.getFloat("settings_wave_height", (float) 0.0);
-        spinnerPosition = sharedPreferences.getInt("spinnerPosition", 5);
+        wavesHeightGlobal = sharedPreferences.getFloat("settings_wave_height", (float) 0.5);
+        spinnerPosition = sharedPreferences.getInt("spinnerPosition", 0);
         visibility = sharedPreferences.getInt("visibility", 8);
         buttonVisible = sharedPreferences.getBoolean("buttonVisibility", false);
         enableAlarms = sharedPreferences.getBoolean("alarmBOX", false);
@@ -263,5 +285,6 @@ public class Settings extends Fragment {
         editor.putString(key, value);
         editor.commit();
     }
+
 }
 
