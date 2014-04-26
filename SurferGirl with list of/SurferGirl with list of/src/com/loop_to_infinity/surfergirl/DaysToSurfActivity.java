@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -35,7 +34,6 @@ import volley.toolbox.Volley;
 public class DaysToSurfActivity extends FragmentActivity {
 
 
-    private static ArrayList<WeatherData> data = new ArrayList<WeatherData>();
     private RequestQueue rq;
     private Context ctx;
     private String choosenCity;
@@ -59,7 +57,7 @@ public class DaysToSurfActivity extends FragmentActivity {
 
         // Get correct url
         url = Magic_Spots_ID.getCitySpots(spinnerPosition + 1);
-        Log.d("URL", url);
+
 
         // Set variables.
         ctx = this;
@@ -82,18 +80,20 @@ public class DaysToSurfActivity extends FragmentActivity {
                     @Override
                     public void onResponse(JSONArray response) {
 
+                        ArrayList<WeatherData> weatherDataArrayList = new ArrayList<WeatherData>();
+
+
                         // extract Json data and put in arraylist
 
 
                         for (int i = 0; i <= 38; i++) {
                             WeatherData wd = new WeatherData();
                             wd.parseJSON(response, i);
-                            data.add(wd);
+                            weatherDataArrayList.add(wd);
 
                         }
 
-                        Log.d("choosen_city", choosenCity + "");
-                        MainFragment mf = new MainFragment(choosenCity);
+                        MainFragment mf = new MainFragment(choosenCity, weatherDataArrayList);
                         FragmentTransaction ft = fm.beginTransaction();
                         ft.replace(R.id.frame, mf);
                         ft.commit();

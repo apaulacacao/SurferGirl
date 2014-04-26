@@ -17,19 +17,21 @@ import java.util.List;
 
 import Adapters.Cities_Adapters;
 import Interfaces.item;
+import Json.WeatherData;
 
 /**
  * Created by Unknown1 on 8/18/13.
  */
 public class MainFragment extends android.support.v4.app.Fragment {
 
-    private Welcome wl;
     private String city;
     private Typeface roboto;
     private String TAG = "MainFragment";
+    private ArrayList<WeatherData> weatherDataObj;
 
-    public MainFragment(String cityLabel) {
+    public MainFragment(String cityLabel, ArrayList<WeatherData> weather) {
         this.city = cityLabel;
+        this.weatherDataObj = weather;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,11 +55,11 @@ public class MainFragment extends android.support.v4.app.Fragment {
         ArrayList<String> days = new ArrayList<String>();
 
         try {
-            days.add(wl.data.get(0).getDayString());
-            days.add(wl.data.get(8).getDayString());
-            days.add(wl.data.get(16).getDayString());
-            days.add(wl.data.get(24).getDayString());
-            days.add(wl.data.get(32).getDayString());
+            days.add(weatherDataObj.get(0).getDayString());
+            days.add(weatherDataObj.get(8).getDayString());
+            days.add(weatherDataObj.get(16).getDayString());
+            days.add(weatherDataObj.get(24).getDayString());
+            days.add(weatherDataObj.get(32).getDayString());
         } catch (ArrayIndexOutOfBoundsException ex) {
             Log.d(TAG, ex.getMessage());
         }
@@ -71,13 +73,13 @@ public class MainFragment extends android.support.v4.app.Fragment {
             if (i % 8 == 0) {
                 items.add(new Header(ctx, inflater, days.get(daysCount)));
 
-                items.add(new List_Item(ctx, inflater, wl.data.get(i).getWavesHeight(), wl.data.get(i).getWindSpeed(), wl.data.get(i).getCurrentDayTimeStamp(), wl.data.get(i).getRawMinimumWavesHeight()));
+                items.add(new List_Item(ctx, inflater, weatherDataObj.get(i).getWavesHeight(), weatherDataObj.get(i).getWindSpeed(), weatherDataObj.get(i).getCurrentDayTimeStamp(), weatherDataObj.get(i).getRawMinimumWavesHeight()));
                 if (daysCount < 5) {
                     daysCount++;
                 }
 
             } else if (i != 8) {
-                items.add(new List_Item(ctx, inflater, wl.data.get(i).getWavesHeight(), wl.data.get(i).getWindSpeed(), wl.data.get(i).getCurrentDayTimeStamp(), wl.data.get(i).getRawMinimumWavesHeight()));
+                items.add(new List_Item(ctx, inflater, weatherDataObj.get(i).getWavesHeight(), weatherDataObj.get(i).getWindSpeed(), weatherDataObj.get(i).getCurrentDayTimeStamp(), weatherDataObj.get(i).getRawMinimumWavesHeight()));
             }
 
         }
@@ -92,5 +94,13 @@ public class MainFragment extends android.support.v4.app.Fragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+
+        weatherDataObj = null;
+        super.onDestroyView();
+
+
+    }
 
 }

@@ -29,7 +29,7 @@
 
         <activity
             android:name=".DaysToSurfActivity"
-            android:label="DaysToSurf"
+            android:label="SurferGirlResults"
             android:screenOrientation="portrait"></activity>
 
 

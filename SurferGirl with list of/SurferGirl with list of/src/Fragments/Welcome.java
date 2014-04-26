@@ -40,7 +40,6 @@ import volley.toolbox.Volley;
  */
 public class Welcome extends Fragment {
 
-    public static ArrayList<WeatherData> data = new ArrayList<WeatherData>();
     private RequestQueue rq;
     private Typeface roboto;
     private Context ctx;
@@ -136,18 +135,21 @@ public class Welcome extends Fragment {
                                 @Override
                                 public void onResponse(JSONArray response) {
 
+                                    ArrayList<WeatherData> weatherDataArrayList = new ArrayList<WeatherData>();
+
+
                                     // extract Json data and put in arraylist
 
 
                                     for (int i = 0; i <= 38; i++) {
                                         WeatherData wd = new WeatherData();
                                         wd.parseJSON(response, i);
-                                        data.add(wd);
+                                        weatherDataArrayList.add(wd);
 
                                     }
 
 
-                                    MainFragment mf = new MainFragment(choosenCity);
+                                    MainFragment mf = new MainFragment(choosenCity, weatherDataArrayList);
                                     FragmentTransaction ft = fm.beginTransaction();
                                     ft.replace(R.id.frame, mf);
                                     ft.commit();
