@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.loop_to_infinity.surfergirl.R;
 
@@ -55,21 +54,23 @@ public class List_Item extends Fragment implements item {
         ViewHolder viewHolder;
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(ctx);
-        double wavesHeightGlobal = sharedPreferences.getFloat("settings_wave_height", (float) 0.0);
+        double wavesHeightGlobal = sharedPreferences.getFloat("settings_wave_height", (float) 0.5);
+        boolean enableAlarms = sharedPreferences.getBoolean("alarmBOX", false);
+
         String tempVal = df.format(wavesHeightGlobal);
         wavesHeightGlobal = Double.valueOf(tempVal);
         double wavesFromJSON = Double.valueOf(rawWaveHeight);
 
         if (convertView == null) {
 
-            convertView = (View) mInflater.inflate(R.layout.cities_row, null);
+            convertView = mInflater.inflate(R.layout.cities_row, null);
             viewHolder = new ViewHolder();
             viewHolder.date = (TextView) convertView.findViewById(R.id.timeStamp);
             viewHolder.waveQuickInfo = (TextView) convertView.findViewById(R.id.WaveHeight);
             viewHolder.wind = (TextView) convertView.findViewById(R.id.windSpeed);
             viewHolder.IV = (ImageView) convertView.findViewById(R.id.imageView);
 
-            if (wavesFromJSON >= wavesHeightGlobal) {
+            if ((wavesFromJSON >= wavesHeightGlobal) && (enableAlarms)) {
                 viewHolder.IV.setVisibility(View.VISIBLE);
             } else viewHolder.IV.setVisibility(View.GONE);
 
@@ -77,7 +78,7 @@ public class List_Item extends Fragment implements item {
 
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            if (wavesFromJSON >= wavesHeightGlobal) {
+            if ((wavesFromJSON >= wavesHeightGlobal) && (enableAlarms)) {
                 viewHolder.IV.setVisibility(View.VISIBLE);
             } else viewHolder.IV.setVisibility(View.GONE);
         }

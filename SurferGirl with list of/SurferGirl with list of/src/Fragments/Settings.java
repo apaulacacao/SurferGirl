@@ -37,7 +37,6 @@ import services.ForecastService;
  */
 public class Settings extends Fragment {
 
-    private static Settings settingsInstance = null;
     private DecimalFormat df = new DecimalFormat("#.#");
     private Context ctx;
     private Typeface roboto;
@@ -47,7 +46,6 @@ public class Settings extends Fragment {
     private int visibility = 0;
     private boolean buttonVisible = false;
     private boolean enableAlarms = false;
-    private long wait = 0;
     private int checkForUpdateInterval = 0;
 
 
@@ -104,10 +102,9 @@ public class Settings extends Fragment {
             }
         });
 
-        // Adapter for custom spinner
+        // Adapter for custom cities spinner
 
         final String[] cities = ctx.getResources().getStringArray(R.array.country_arrays);
-
         MyCustomSpinnerAdapter myCitiesAdapter = new MyCustomSpinnerAdapter(ctx, android.R.layout.simple_list_item_1, cities);
 
         final Spinner spinner = (Spinner) view.findViewById(R.id.settings_spinner);
@@ -135,6 +132,9 @@ public class Settings extends Fragment {
 
             }
         });
+
+
+        // Adapter for Interval selection
 
         final String[] intervalArr = ctx.getResources().getStringArray(R.array.interval_array);
         MyCustomSpinnerAdapter myIntervalAdapter = new MyCustomSpinnerAdapter(ctx, android.R.layout.simple_list_item_1, intervalArr);
@@ -292,20 +292,20 @@ public class Settings extends Fragment {
 
 
         switch (position) {
-            case 0:
+            case 4:
                 returnVal = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
                 break;
 
-            case 1:
+            case 3:
                 returnVal = AlarmManager.INTERVAL_HALF_HOUR;
                 break;
             case 2:
                 returnVal = AlarmManager.INTERVAL_HOUR;
                 break;
-            case 3:
+            case 1:
                 returnVal = AlarmManager.INTERVAL_HALF_DAY;
                 break;
-            case 4:
+            case 0:
                 returnVal = AlarmManager.INTERVAL_DAY;
                 break;
         }
