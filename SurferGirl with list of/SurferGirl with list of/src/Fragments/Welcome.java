@@ -144,19 +144,20 @@ public class Welcome extends Fragment {
                                         wd.parseJSON(response, i);
                                         data.add(wd);
 
-
-                                        MainFragment mf = new MainFragment(choosenCity);
-                                        FragmentTransaction ft = fm.beginTransaction();
-                                        ft.replace(R.id.frame, mf);
-                                        ft.commit();
-
-                                        progressDialog.dismiss();
-
-
                                     }
 
 
+                                    MainFragment mf = new MainFragment(choosenCity);
+                                    FragmentTransaction ft = fm.beginTransaction();
+                                    ft.replace(R.id.frame, mf);
+                                    ft.commit();
+
+                                    progressDialog.dismiss();
+
+
                                 }
+
+
                             }, new Response.ErrorListener() {
 
                         @Override

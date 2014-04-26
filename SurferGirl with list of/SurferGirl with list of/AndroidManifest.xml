@@ -27,8 +27,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".DaysToSurfActivity"
+            android:label="DaysToSurf"
+            android:screenOrientation="portrait"></activity>
 
-        <service android:name="services.ForecastService" android:enabled="true" android:permission="com.surferGirl.FORECAST_PERMISSION"/>
+
+        <service
+            android:name="services.ForecastService"
+            android:enabled="true"
+            android:permission="com.surferGirl.FORECAST_PERMISSION" />
     </application>
 
 </manifest>

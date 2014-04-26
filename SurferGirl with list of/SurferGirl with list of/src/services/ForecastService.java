@@ -13,7 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.loop_to_infinity.surfergirl.BaseActivity;
+import com.loop_to_infinity.surfergirl.DaysToSurfActivity;
 import com.loop_to_infinity.surfergirl.R;
 
 import org.json.JSONArray;
@@ -162,7 +162,7 @@ public class ForecastService extends Service {
 
                             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx).setSmallIcon(icon).setContentTitle(tickerText).setAutoCancel(true).setContentText(tickerText).setSound(sound);
 
-                            Intent openMainActivity = new Intent(getApplicationContext(), BaseActivity.class);
+                            Intent openMainActivity = new Intent(getApplicationContext(), DaysToSurfActivity.class);
 
                             PendingIntent pi = PendingIntent.getActivity(ctx, 5, openMainActivity, 0);
                             mBuilder.setContentIntent(pi);
