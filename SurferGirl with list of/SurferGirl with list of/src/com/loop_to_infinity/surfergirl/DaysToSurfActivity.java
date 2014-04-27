@@ -34,14 +34,10 @@ import volley.toolbox.Volley;
 public class DaysToSurfActivity extends FragmentActivity {
 
 
-    private RequestQueue rq;
     private Context ctx;
     private String choosenCity;
     private int spinnerPosition;
     private JsonArrayRequest jsArrayRequest;
-
-    // MagicSeaWeed spot url
-    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +52,14 @@ public class DaysToSurfActivity extends FragmentActivity {
 
 
         // Get correct url
-        url = Magic_Spots_ID.getCitySpots(spinnerPosition + 1);
+        String url = Magic_Spots_ID.getCitySpots(spinnerPosition + 1);
 
 
         // Set variables.
         ctx = this;
-        rq = Volley.newRequestQueue(ctx);
+        RequestQueue rq = Volley.newRequestQueue(ctx);
         final String[] cities = ctx.getResources().getStringArray(R.array.country_arrays);
-        choosenCity = cities[spinnerPosition].toString();
+        choosenCity = cities[spinnerPosition];
 
 
         final ProgressDialog progressDialog = new ProgressDialog(ctx);

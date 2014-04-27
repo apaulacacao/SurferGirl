@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.loop_to_infinity.surfergirl.R;
-
 import java.util.List;
 
 import Interfaces.item;
@@ -16,10 +14,6 @@ import Interfaces.item;
 public class Cities_Adapters extends ArrayAdapter<item> {
     private LayoutInflater mInflater;
 
-
-    public enum RowType {
-        HEADER_ITEM, LIST_ITEM
-    }
 
     public Cities_Adapters(Context ctx, List<item> items) {
         super(ctx, 0, items);
@@ -38,13 +32,17 @@ public class Cities_Adapters extends ArrayAdapter<item> {
         return getItem(position).getViewType();
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         return getItem(position).getView(mInflater, convertView);
 
 
+    }
+
+
+    public enum RowType {
+        HEADER_ITEM, LIST_ITEM
     }
 
     static class ViewHolder {

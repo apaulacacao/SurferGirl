@@ -1,62 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/wel"
-    xmlns:android="http://schemas.android.com/apk/res/android"
 
     >
 
     <TextView
+        android:id="@+id/welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Welcome Home!"
-        android:padding="5dp"
-        android:id="@+id/welcome"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:textColor="@color/card_white"
-        android:textSize="45sp"
+        android:layout_marginTop="121dp"
         android:background="#8c303030"
-        android:layout_marginTop="121dp" />
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/WelcomeHome"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/card_white"
+        android:textSize="45sp" />
 
     <TextView
+        android:id="@+id/chooseLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="45sp"
-        android:text="Choose City:"
-        android:id="@+id/chooseLabel"
-        android:paddingLeft="5dp"
-        android:layout_marginTop="45sp"
         android:layout_alignLeft="@id/welcome"
+        android:layout_below="@id/welcome"
+        android:layout_marginTop="45sp"
+        android:paddingLeft="5dp"
+        android:text="@string/ChooseCityLabel"
         android:textColor="@color/card_white"
-        android:layout_below="@id/welcome" />
+        android:textSize="45sp" />
 
     <Spinner
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
+        android:layout_alignLeft="@id/chooseLabel"
         android:layout_below="@+id/chooseLabel"
         android:layout_centerHorizontal="true"
-        android:entries="@array/country_arrays"
         android:layout_centerInParent="true"
         android:background="@color/card_shadow"
+        android:entries="@array/country_arrays"
         android:padding="2dp"
-        android:spinnerMode="dialog"
-        android:layout_alignLeft="@id/chooseLabel"
-        />
+        android:spinnerMode="dialog" />
 
     <Button
+        android:id="@+id/go"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Go!"
-        android:layout_marginTop="10dp"
-        android:id="@+id/go"
         android:layout_below="@+id/spinner"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/GoButtonText" />
 
 
 </RelativeLayout>

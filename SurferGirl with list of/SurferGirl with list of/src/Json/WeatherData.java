@@ -43,7 +43,6 @@ public class WeatherData {
             Calendar cal = Calendar.getInstance();
             cal.setTime(timeOfDay);
             int AM_PM_hour = cal.get(Calendar.HOUR_OF_DAY);
-            int minutes = cal.get(Calendar.MINUTE);
             dayString = cal.get(Calendar.DAY_OF_WEEK);
 
 

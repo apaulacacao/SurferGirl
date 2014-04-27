@@ -9,36 +9,36 @@
         android:id="@+id/timeStamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:paddingTop="15dp"
-        android:textSize="15sp"
-        android:text="date: N/A"
         android:layout_alignLeft="@+id/windSpeed"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="15dp"
+        android:text="@string/Date_EmptyString"
+        android:textSize="15sp"
 
         />
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:id="@+id/imageView"
-        android:src="@drawable/circle2"
         android:layout_alignBottom="@+id/timeStamp"
         android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
         android:layout_toRightOf="@+id/timeStamp"
-        />
+        android:contentDescription="@string/SummeryList_FoundWaves_ImageView_ContentDesc"
+        android:paddingLeft="10dp"
+        android:src="@drawable/circle2" />
 
     <TextView
         android:id="@+id/WaveHeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:paddingLeft="10dp"
-        android:text="Height N/A"
         android:layout_below="@id/timeStamp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="10dp"
+        android:text="@string/SummeryList_WavesHeight_Label"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
@@ -46,12 +46,12 @@
         android:id="@+id/windSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textSize="15sp"
-        android:paddingBottom="45dp"
+        android:layout_alignLeft="@+id/WaveHeight"
         android:layout_below="@+id/WaveHeight"
-        android:text="wind: N/A"
-        android:layout_alignLeft="@+id/WaveHeight" />
+        android:paddingBottom="45dp"
+        android:paddingLeft="10dp"
+        android:text="@string/SummeryList_WindSpeed_Label"
+        android:textSize="15sp" />
 
 
 </RelativeLayout>

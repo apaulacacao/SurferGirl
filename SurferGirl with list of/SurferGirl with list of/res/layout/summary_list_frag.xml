@@ -4,33 +4,32 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:id="@+id/cityLabelLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#343432"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/cityLabelLayoutTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text=""
-            android:id="@+id/cityLabelLayoutTextView"
-            android:layout_below="@+id/cityLabelLayout"
-            android:textColor="@color/card_white"
             android:layout_gravity="center"
-            android:gravity="center" />
+            android:gravity="center"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/card_white" />
 
     </LinearLayout>
 
 
     <ListView
         android:id="@+id/list"
-        android:layout_below="@+id/cityLabelLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true">
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/cityLabelLayout">
 
     </ListView>
 

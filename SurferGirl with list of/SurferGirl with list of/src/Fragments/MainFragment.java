@@ -1,6 +1,8 @@
 package Fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -68,26 +70,44 @@ public class MainFragment extends android.support.v4.app.Fragment {
         // Array for Israel Cities and beaches
         List<item> items = new ArrayList<item>();
 
+        // If correct data was parsed in WeatherData object, start populating list
+        if (days.size() != 0) {
+            for (int i = 0; i < 39; i++) {
+                if (i % 8 == 0) {
 
-        for (int i = 0; i < 39; i++) {
-            if (i % 8 == 0) {
-                items.add(new Header(ctx, inflater, days.get(daysCount)));
+                    items.add(new Header(ctx, inflater, days.get(daysCount)));
 
-                items.add(new List_Item(ctx, inflater, weatherDataObj.get(i).getWavesHeight(), weatherDataObj.get(i).getWindSpeed(), weatherDataObj.get(i).getCurrentDayTimeStamp(), weatherDataObj.get(i).getRawMinimumWavesHeight()));
-                if (daysCount < 5) {
-                    daysCount++;
+                    items.add(new List_Item(ctx, inflater, weatherDataObj.get(i).getWavesHeight(), weatherDataObj.get(i).getWindSpeed(), weatherDataObj.get(i).getCurrentDayTimeStamp(), weatherDataObj.get(i).getRawMinimumWavesHeight()));
+                    if (daysCount < 5) {
+                        daysCount++;
+                    }
+
+                } else if (i != 8) {
+                    items.add(new List_Item(ctx, inflater, weatherDataObj.get(i).getWavesHeight(), weatherDataObj.get(i).getWindSpeed(), weatherDataObj.get(i).getCurrentDayTimeStamp(), weatherDataObj.get(i).getRawMinimumWavesHeight()));
                 }
 
-            } else if (i != 8) {
-                items.add(new List_Item(ctx, inflater, weatherDataObj.get(i).getWavesHeight(), weatherDataObj.get(i).getWindSpeed(), weatherDataObj.get(i).getCurrentDayTimeStamp(), weatherDataObj.get(i).getRawMinimumWavesHeight()));
+
             }
 
-        }
-        ca = new Cities_Adapters(ctx,
-                items);
+            ca = new Cities_Adapters(ctx,
+                    items);
 
-        ListView lv = (ListView) view.findViewById(R.id.list);
-        lv.setAdapter(ca);
+            ListView lv = (ListView) view.findViewById(R.id.list);
+            lv.setAdapter(ca);
+
+        } else if (days.size() == 0) {
+            // Show error dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+            builder.setTitle(ctx.getResources().getString(R.string.error));
+            builder.setMessage(ctx.getResources().getString(R.string.errorData));
+            builder.setNegativeButton(ctx.getResources().getString(R.string.errorBtnOkay), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            builder.show();
+        }
 
 
         return view;

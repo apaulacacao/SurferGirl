@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +97,7 @@ public class Welcome extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 spinnerPosition = position;
-                choosenCity = cities[spinnerPosition].toString();
+                choosenCity = cities[spinnerPosition];
 
                 countSelections++;
 
@@ -119,6 +120,8 @@ public class Welcome extends Fragment {
 
                     // Get correct url
                     url = Magic_Spots_ID.getCitySpots(spinnerPosition + 1);
+                    Log.d("URL", url);
+                    Log.d("SpinnerPos", spinnerPosition + "");
 
 
                     final ProgressDialog progressDialog = new ProgressDialog(ctx);

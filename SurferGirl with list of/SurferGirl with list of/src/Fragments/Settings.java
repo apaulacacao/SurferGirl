@@ -43,7 +43,7 @@ public class Settings extends Fragment {
     private int count = 0;
     private double wavesHeightGlobal = 0.5;
     private int spinnerPosition = 0;
-    private int visibility = 0;
+    private int visibility = View.VISIBLE;
     private boolean buttonVisible = false;
     private boolean enableAlarms = false;
     private int checkForUpdateInterval = 0;
@@ -222,8 +222,8 @@ public class Settings extends Fragment {
 
                 // Start forecast service and set alarm manager
                 if (alarmBox.isChecked()) {
-                    AlarmManager am = (AlarmManager) ctx.getSystemService(ctx.ALARM_SERVICE);
-                    int alarmType = am.RTC;
+                    AlarmManager am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+                    int alarmType = AlarmManager.RTC;
 
                     Intent forecastIntent = new Intent(ctx, ForecastService.class);
                     forecastIntent.putExtra("position2", position);
@@ -231,7 +231,7 @@ public class Settings extends Fragment {
                     am.setInexactRepeating(alarmType, 0, getIntervalByPosition(checkForUpdateInterval), alarmIntent);
                 }
 
-                InputMethodManager im = (InputMethodManager) ctx.getSystemService(ctx.INPUT_METHOD_SERVICE);
+                InputMethodManager im = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
                 im.hideSoftInputFromWindow(wavesHeight_Edit.getWindowToken(), 0);
 
             }
