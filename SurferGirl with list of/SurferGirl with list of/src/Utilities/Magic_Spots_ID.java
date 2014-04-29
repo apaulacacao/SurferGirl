@@ -1,16 +1,16 @@
 package Utilities;
 
-import java.util.HashMap;
+import android.util.SparseArray;
 
 /*
-    A hashmap class to use spots ID.
+    A SparseArray class to use spots ID.
     This should be refactored to use something more dynamic
 
  */
 
 public class Magic_Spots_ID {
 
-    private static HashMap<Integer, String> citySpots = new HashMap<Integer, String>();
+    private static SparseArray<String> citySpots = new SparseArray<String>();
 
     public Magic_Spots_ID() {
 
