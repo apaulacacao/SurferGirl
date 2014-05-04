@@ -41,6 +41,7 @@ public class DaysToSurfActivity extends FragmentActivity {
     private JsonArrayRequest jsArrayRequest;
     private RequestQueue rq;
     private FragmentManager fm;
+    private MainFragment mf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +100,8 @@ public class DaysToSurfActivity extends FragmentActivity {
 
                             }
 
-                            MainFragment mf = new MainFragment(chosenCity, weatherDataArrayList);
+                            mf = new MainFragment(chosenCity, weatherDataArrayList);
+
                             FragmentTransaction ft = fm.beginTransaction();
                             ft.replace(R.id.frame, mf);
                             ft.commit();
@@ -143,11 +145,13 @@ public class DaysToSurfActivity extends FragmentActivity {
 
     @Override
     public void onStop() {
-        super.onStop();
-
         jsArrayRequest = null;
         rq = null;
         fm = null;
+
+        super.onStop();
+        finish();
+
 
     }
 

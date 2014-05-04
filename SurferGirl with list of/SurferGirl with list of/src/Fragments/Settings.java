@@ -229,6 +229,7 @@ public class Settings extends Fragment {
                     forecastIntent.putExtra("position2", position);
                     PendingIntent alarmIntent = PendingIntent.getService(ctx, 10, forecastIntent, 0);
                     am.setInexactRepeating(alarmType, 0, getIntervalByPosition(checkForUpdateInterval), alarmIntent);
+
                 }
 
                 InputMethodManager im = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);

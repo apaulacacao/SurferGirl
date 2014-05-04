@@ -27,14 +27,16 @@ import Json.WeatherData;
 public class MainFragment extends android.support.v4.app.Fragment {
 
     private String city;
+    private ArrayList<WeatherData> weatherDataObj;
     private Typeface roboto;
     private String TAG = "MainFragment";
-    private ArrayList<WeatherData> weatherDataObj;
+
 
     public MainFragment(String cityLabel, ArrayList<WeatherData> weather) {
         this.city = cityLabel;
         this.weatherDataObj = weather;
     }
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -125,6 +127,7 @@ public class MainFragment extends android.support.v4.app.Fragment {
     public void onDestroyView() {
 
         weatherDataObj = null;
+        city = null;
         super.onDestroyView();
 
 

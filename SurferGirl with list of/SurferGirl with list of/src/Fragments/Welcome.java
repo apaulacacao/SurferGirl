@@ -212,7 +212,6 @@ public class Welcome extends Fragment {
     private void loadNextFragment(ArrayList<WeatherData> weatherDataArrayList) {
 
         FragmentManager fm = getFragmentManager();
-
         MainFragment mf = new MainFragment(choosenCity, weatherDataArrayList);
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frame, mf);
