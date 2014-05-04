@@ -43,15 +43,15 @@ public class MainFragment extends android.support.v4.app.Fragment {
                 false);
         super.onCreateView(inflater, container, savedInstanceState);
 
+        // Set variables...
         Context ctx = getActivity();
         final Cities_Adapters ca;
         roboto = Typeface.createFromAsset(ctx.getAssets(), "fonts/rthis.ttf");
 
-
+        // Add UI
         TextView cityLabelView = (TextView) view.findViewById(R.id.cityLabelLayoutTextView);
         cityLabelView.setText(city);
         cityLabelView.setTypeface(roboto);
-
 
         // ArrayList for days displayed
         ArrayList<String> days = new ArrayList<String>();
@@ -111,6 +111,13 @@ public class MainFragment extends android.support.v4.app.Fragment {
 
 
         return view;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
 
     }
 

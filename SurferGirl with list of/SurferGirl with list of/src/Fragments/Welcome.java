@@ -124,6 +124,7 @@ public class Welcome extends Fragment {
                     Log.d("SpinnerPos", spinnerPosition + "");
 
 
+                    // Show the user progress dialog
                     final ProgressDialog progressDialog = new ProgressDialog(ctx);
                     progressDialog.setMessage(choosenCity + " - " + ctx.getResources().getString(R.string.loadingMSG));
                     progressDialog.setCancelable(false);
@@ -143,23 +144,21 @@ public class Welcome extends Fragment {
 
                                     // extract Json data and put in arraylist
 
+                                    if (response.length() > 0) {
+                                        for (int i = 0; i <= 38; i++) {
+                                            WeatherData wd = new WeatherData();
+                                            wd.parseJSON(response, i);
+                                            weatherDataArrayList.add(wd);
 
-                                    for (int i = 0; i <= 38; i++) {
-                                        WeatherData wd = new WeatherData();
-                                        wd.parseJSON(response, i);
-                                        weatherDataArrayList.add(wd);
+                                        }
 
+                                        progressDialog.dismiss();
+                                        loadNextFragment(weatherDataArrayList);
+
+                                    } else if (response.length() == 0) {
+                                        progressDialog.dismiss();
+                                        errorDialog();
                                     }
-
-
-                                    MainFragment mf = new MainFragment(choosenCity, weatherDataArrayList);
-                                    FragmentTransaction ft = fm.beginTransaction();
-                                    ft.replace(R.id.frame, mf);
-                                    ft.commit();
-
-                                    progressDialog.dismiss();
-
-
                                 }
 
 
@@ -169,18 +168,7 @@ public class Welcome extends Fragment {
                         public void onErrorResponse(VolleyError error) {
                             // Dismiss loading dialog
                             progressDialog.dismiss();
-
-                            // Show error dialog
-                            AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-                            builder.setTitle(ctx.getResources().getString(R.string.error));
-                            builder.setMessage(ctx.getResources().getString(R.string.errorData));
-                            builder.setNegativeButton(ctx.getResources().getString(R.string.errorBtnOkay), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-                            builder.show();
+                            errorDialog();
 
                         }
                     }
@@ -219,5 +207,30 @@ public class Welcome extends Fragment {
                 .getDefaultSharedPreferences(ctx);
         spinnerPosition = sharedPreferences.getInt("spinnerPosition", 0);
 
+    }
+
+    private void loadNextFragment(ArrayList<WeatherData> weatherDataArrayList) {
+
+        FragmentManager fm = getFragmentManager();
+
+        MainFragment mf = new MainFragment(choosenCity, weatherDataArrayList);
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.frame, mf);
+        ft.commit();
+    }
+
+    private void errorDialog() {
+
+        // Show error dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        builder.setTitle(ctx.getResources().getString(R.string.error));
+        builder.setMessage(ctx.getResources().getString(R.string.errorData));
+        builder.setNegativeButton(ctx.getResources().getString(R.string.errorBtnOkay), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 }

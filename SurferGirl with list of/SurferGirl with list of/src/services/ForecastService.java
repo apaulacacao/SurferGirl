@@ -42,7 +42,6 @@ public class ForecastService extends Service {
     public void onCreate() {
         super.onCreate();
 
-
     }
 
 
@@ -94,80 +93,82 @@ public class ForecastService extends Service {
                         SharedPreferences sharedPreferences = PreferenceManager
                                 .getDefaultSharedPreferences(ctx);
 
-
-                        double minimumFromSettings = sharedPreferences.getFloat("settings_wave_height", (float) 0.0);
-                        minimumFromSettings = (double) Math.round(minimumFromSettings * 10) / 10;
-
-
-                        for (int i = 0; i <= 38; i++) {
-                            WeatherData wd = new WeatherData();
-                            wd.parseJSON(response, i);
-                            dataAlarm.add(wd);
-
-                        }
-
-                        // Find if one of the entries fits the minimum waves height the user set for alarms
-
-                        for (int i = 0; i <= 38; i++) {
+                        // Do your thing, only if we got correct JSONArray response. "0" is not a correct response.
+                        if (response.length() > 0) {
+                            double minimumFromSettings = sharedPreferences.getFloat("settings_wave_height", (float) 0.0);
+                            minimumFromSettings = (double) Math.round(minimumFromSettings * 10) / 10;
 
 
-                            Double minimumDoubleFromJSON = 0.0;
-                            String minimum = dataAlarm.get(i).getRawMinimumWavesHeight();
-                            try {
-                                minimumDoubleFromJSON = Double.parseDouble(minimum);
-
-                            } catch (NumberFormatException nf) {
-                                nf.printStackTrace();
-                            } catch (NullPointerException np) {
-                                np.printStackTrace();
-                            }
-                            if (minimumDoubleFromJSON >= minimumFromSettings) {
-
-                                // add entry to an array of objects with matching minimum height
-                                daysWithWavesMatch.add(dataAlarm.get(i));
+                            for (int i = 0; i <= 38; i++) {
+                                WeatherData wd = new WeatherData();
+                                wd.parseJSON(response, i);
+                                dataAlarm.add(wd);
 
                             }
 
-                        }
+                            // Find if one of the entries fits the minimum waves height the user set for alarms
+
+                            for (int i = 0; i <= 38; i++) {
 
 
-                        // Find distinct days out of matching objects
-                        if (daysWithWavesMatch.size() > 0) {
-                            String day;
-                            ArrayList<WeatherData> distinctDays = new ArrayList<WeatherData>();
-                            day = daysWithWavesMatch.get(0).getDayString();
-                            distinctDays.add(daysWithWavesMatch.get(0));
+                                Double minimumDoubleFromJSON = 0.0;
+                                String minimum = dataAlarm.get(i).getRawMinimumWavesHeight();
+                                try {
+                                    minimumDoubleFromJSON = Double.parseDouble(minimum);
 
+                                } catch (NumberFormatException nf) {
+                                    nf.printStackTrace();
+                                } catch (NullPointerException np) {
+                                    np.printStackTrace();
+                                }
+                                if (minimumDoubleFromJSON >= minimumFromSettings) {
 
-                            for (int j = 0; j < daysWithWavesMatch.size(); j++) {
-                                if (!day.equals(daysWithWavesMatch.get(j).getDayString())) {
-                                    day = daysWithWavesMatch.get(j).getDayString();
-                                    distinctDays.add(daysWithWavesMatch.get(j));
+                                    // add entry to an array of objects with matching minimum height
+                                    daysWithWavesMatch.add(dataAlarm.get(i));
 
                                 }
 
                             }
 
-                            Log.d("SIZE", daysWithWavesMatch.size() + "");
 
-                            if (distinctDays.size() > 0) {
-                                updateDB(distinctDays);
+                            // Find distinct days out of matching objects
+                            if (daysWithWavesMatch.size() > 0) {
+                                String day;
+                                ArrayList<WeatherData> distinctDays = new ArrayList<WeatherData>();
+                                day = daysWithWavesMatch.get(0).getDayString();
+                                distinctDays.add(daysWithWavesMatch.get(0));
+
+
+                                for (int j = 0; j < daysWithWavesMatch.size(); j++) {
+                                    if (!day.equals(daysWithWavesMatch.get(j).getDayString())) {
+                                        day = daysWithWavesMatch.get(j).getDayString();
+                                        distinctDays.add(daysWithWavesMatch.get(j));
+
+                                    }
+
+                                }
+
+                                Log.d("SIZE", daysWithWavesMatch.size() + "");
+
+                                if (distinctDays.size() > 0) {
+                                    updateDB(distinctDays);
+                                }
+
+
+                                NotificationManager nm = (NotificationManager) ctx.getSystemService(NOTIFICATION_SERVICE);
+                                int icon = R.drawable.ic_launcher;
+                                String tickerText = distinctDays.size() + " Good days to surf!";
+                                Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+                                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx).setSmallIcon(icon).setContentTitle(tickerText).setAutoCancel(true).setContentText(tickerText).setSound(sound);
+
+                                Intent openMainActivity = new Intent(getApplicationContext(), DaysToSurfActivity.class);
+
+                                PendingIntent pi = PendingIntent.getActivity(ctx, 5, openMainActivity, 0);
+                                mBuilder.setContentIntent(pi);
+                                nm.notify(0, mBuilder.build());
+
                             }
-
-
-                            NotificationManager nm = (NotificationManager) ctx.getSystemService(NOTIFICATION_SERVICE);
-                            int icon = R.drawable.ic_launcher;
-                            String tickerText = distinctDays.size() + " Good days to surf!";
-                            Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx).setSmallIcon(icon).setContentTitle(tickerText).setAutoCancel(true).setContentText(tickerText).setSound(sound);
-
-                            Intent openMainActivity = new Intent(getApplicationContext(), DaysToSurfActivity.class);
-
-                            PendingIntent pi = PendingIntent.getActivity(ctx, 5, openMainActivity, 0);
-                            mBuilder.setContentIntent(pi);
-                            nm.notify(0, mBuilder.build());
-
                         }
 
 

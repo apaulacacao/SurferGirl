@@ -39,7 +39,7 @@
     <string name="WaveHeight">Waves Height: </string>
     <string name="Date">Date: </string>
     <string name="error">Error:</string>
-    <string name="errorData">There was a problem obtaining data. Please try again.</string>
+    <string name="errorData">There was a problem obtaining data. Please try again later.</string>
     <string name="errorBtnOkay">Okay</string>
     <string name="loadingMSG"> Obtaining waves data. Please Hold.</string>
     <string name="WelcomeHome">Welcome Home</string>

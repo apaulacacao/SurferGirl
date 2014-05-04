@@ -35,9 +35,11 @@ public class DaysToSurfActivity extends FragmentActivity {
 
 
     private Context ctx;
-    private String choosenCity;
+    private String chosenCity;
     private int spinnerPosition;
     private JsonArrayRequest jsArrayRequest;
+    private RequestQueue rq;
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,29 +47,34 @@ public class DaysToSurfActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_base);
 
-        final FragmentManager fm = getSupportFragmentManager();
+        fm = getSupportFragmentManager();
         Magic_Spots_ID.initPlaces();
 
         loadSavedPreferences();
 
 
+        // Set variables.
+        ctx = this;
+        rq = Volley.newRequestQueue(ctx);
+        final String[] cities = ctx.getResources().getStringArray(R.array.country_arrays);
+        chosenCity = cities[spinnerPosition];
+
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         // Get correct url
         String url = Magic_Spots_ID.getCitySpots(spinnerPosition + 1);
 
-
-        // Set variables.
-        ctx = this;
-        RequestQueue rq = Volley.newRequestQueue(ctx);
-        final String[] cities = ctx.getResources().getStringArray(R.array.country_arrays);
-        choosenCity = cities[spinnerPosition];
-
-
         final ProgressDialog progressDialog = new ProgressDialog(ctx);
-        progressDialog.setMessage(choosenCity + " - " + ctx.getResources().getString(R.string.loadingMSG));
+        progressDialog.setMessage(chosenCity + " - " + ctx.getResources().getString(R.string.loadingMSG));
         progressDialog.setCancelable(false);
         progressDialog.setIndeterminate(true);
         progressDialog.show();
-
 
         // Get JSONArray from MagicSeeWeed
         jsArrayRequest = new JsonArrayRequest(url,
@@ -89,7 +96,7 @@ public class DaysToSurfActivity extends FragmentActivity {
 
                         }
 
-                        MainFragment mf = new MainFragment(choosenCity, weatherDataArrayList);
+                        MainFragment mf = new MainFragment(chosenCity, weatherDataArrayList);
                         FragmentTransaction ft = fm.beginTransaction();
                         ft.replace(R.id.frame, mf);
                         ft.commit();
@@ -122,14 +129,6 @@ public class DaysToSurfActivity extends FragmentActivity {
         );
 
         rq.add(jsArrayRequest);
-
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
     }
 
     @Override
@@ -137,6 +136,36 @@ public class DaysToSurfActivity extends FragmentActivity {
         super.onStart();
     }
 
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        jsArrayRequest = null;
+        rq = null;
+        fm = null;
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.frame, new Welcome());
+        ft.commit();
+
+
+    }
+
+
+    private void loadSavedPreferences() {
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+        spinnerPosition = sharedPreferences.getInt("spinnerPosition", 888);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -160,32 +189,6 @@ public class DaysToSurfActivity extends FragmentActivity {
         }
 
         return true;
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.frame, new Welcome());
-        ft.commit();
-
-
-    }
-
-
-    private void loadSavedPreferences() {
-
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext());
-        spinnerPosition = sharedPreferences.getInt("spinnerPosition", 888);
-
     }
 
 }
