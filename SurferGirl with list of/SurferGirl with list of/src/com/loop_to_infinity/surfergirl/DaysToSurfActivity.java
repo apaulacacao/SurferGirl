@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 
@@ -34,7 +35,7 @@ import volley.toolbox.Volley;
 public class DaysToSurfActivity extends FragmentActivity {
 
 
-    private Context ctx;
+    private Context ctx = this;
     private String chosenCity;
     private int spinnerPosition;
     private JsonArrayRequest jsArrayRequest;
@@ -47,18 +48,20 @@ public class DaysToSurfActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_base);
 
-        fm = getSupportFragmentManager();
-        Magic_Spots_ID.initPlaces();
+        try {
+            fm = getSupportFragmentManager();
+            Magic_Spots_ID.initPlaces();
 
-        loadSavedPreferences();
+            loadSavedPreferences();
 
 
-        // Set variables.
-        ctx = this;
-        rq = Volley.newRequestQueue(ctx);
-        final String[] cities = ctx.getResources().getStringArray(R.array.country_arrays);
-        chosenCity = cities[spinnerPosition];
-
+            // Set variables.
+            rq = Volley.newRequestQueue(ctx);
+            final String[] cities = ctx.getResources().getStringArray(R.array.country_arrays);
+            chosenCity = cities[spinnerPosition];
+        } catch (Exception ex) {
+            System.out.print("" + ex.getMessage());
+        }
 
     }
 
@@ -88,22 +91,23 @@ public class DaysToSurfActivity extends FragmentActivity {
 
                         // extract Json data and put in arraylist
 
+                        if (response.length() > 0) {
+                            for (int i = 0; i <= 38; i++) {
+                                WeatherData wd = new WeatherData();
+                                wd.parseJSON(response, i);
+                                weatherDataArrayList.add(wd);
 
-                        for (int i = 0; i <= 38; i++) {
-                            WeatherData wd = new WeatherData();
-                            wd.parseJSON(response, i);
-                            weatherDataArrayList.add(wd);
+                            }
 
-                        }
+                            MainFragment mf = new MainFragment(chosenCity, weatherDataArrayList);
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.replace(R.id.frame, mf);
+                            ft.commit();
 
-                        MainFragment mf = new MainFragment(chosenCity, weatherDataArrayList);
-                        FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.frame, mf);
-                        ft.commit();
+                            progressDialog.dismiss();
 
-                        progressDialog.dismiss();
-
-
+                        } else
+                            Toast.makeText(ctx, "Error", Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
 
@@ -162,8 +166,8 @@ public class DaysToSurfActivity extends FragmentActivity {
     private void loadSavedPreferences() {
 
         SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext());
-        spinnerPosition = sharedPreferences.getInt("spinnerPosition", 888);
+                .getDefaultSharedPreferences(ctx);
+        spinnerPosition = sharedPreferences.getInt("spinnerPosition", 0);
 
     }
 
