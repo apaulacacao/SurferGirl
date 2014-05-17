@@ -156,7 +156,7 @@ public class ForecastService extends Service {
 
 
                                 NotificationManager nm = (NotificationManager) ctx.getSystemService(NOTIFICATION_SERVICE);
-                                int icon = R.drawable.ic_launcher;
+                                int icon = R.drawable.r32;
                                 String tickerText = distinctDays.size() + " Good days to surf!";
                                 Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
