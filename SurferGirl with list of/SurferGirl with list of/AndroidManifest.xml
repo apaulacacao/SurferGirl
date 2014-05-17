@@ -12,7 +12,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/r48"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
@@ -31,6 +31,8 @@
             android:name=".DaysToSurfActivity"
             android:label="SurferGirlResults"
             android:screenOrientation="portrait"></activity>
+
+
 
 
         <service

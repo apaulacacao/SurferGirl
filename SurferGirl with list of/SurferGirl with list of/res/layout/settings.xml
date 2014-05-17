@@ -103,7 +103,7 @@
             android:focusable="true"
             android:inputType="numberDecimal"
             android:text="@string/Settings_WavesHeight_EditText"
-            android:textColor="@color/card_white" />
+            android:textColor="@android:color/black" />
 
     </TableRow>
 
@@ -114,5 +114,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textColor="@android:color/black"
         android:text="@string/Settings_Save_Button" />
 </TableLayout>

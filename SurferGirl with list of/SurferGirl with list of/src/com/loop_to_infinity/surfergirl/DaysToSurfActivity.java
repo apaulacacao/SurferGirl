@@ -1,5 +1,6 @@
 package com.loop_to_infinity.surfergirl;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -46,7 +47,8 @@ public class DaysToSurfActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ActionBar ab = getActionBar();
+        ab.setTitle("");
         setContentView(R.layout.activity_base);
 
         try {

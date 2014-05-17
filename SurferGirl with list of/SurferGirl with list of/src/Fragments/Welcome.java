@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,6 +84,17 @@ public class Welcome extends Fragment {
 
         Button go = (Button) view.findViewById(R.id.go);
         go.setTypeface(roboto);
+
+        ImageView msw = (ImageView) view.findViewById(R.id.mswPic);
+        msw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = fm.beginTransaction();
+                WebViewFrag wv = new WebViewFrag();
+                ft.replace(R.id.frame, wv);
+                ft.commit();
+            }
+        });
 
 
         MyCustomSpinnerAdapter myCitiesAdapter = new MyCustomSpinnerAdapter(ctx, android.R.layout.simple_list_item_1, cities, 26);

@@ -201,7 +201,6 @@ public class Settings extends Fragment {
 
         save.setTypeface(roboto);
         save.setEnabled(buttonVisible);
-        save.setTextColor(getResources().getColor(R.color.card_white));
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

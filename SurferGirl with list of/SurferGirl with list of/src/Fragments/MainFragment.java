@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,15 +57,13 @@ public class MainFragment extends android.support.v4.app.Fragment {
         // ArrayList for days displayed
         ArrayList<String> days = new ArrayList<String>();
 
-        try {
-            days.add(weatherDataObj.get(0).getDayString());
-            days.add(weatherDataObj.get(8).getDayString());
-            days.add(weatherDataObj.get(16).getDayString());
-            days.add(weatherDataObj.get(24).getDayString());
-            days.add(weatherDataObj.get(32).getDayString());
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            Log.d(TAG, ex.getMessage());
-        }
+
+        days.add(weatherDataObj.get(0).getDayString());
+        days.add(weatherDataObj.get(8).getDayString());
+        days.add(weatherDataObj.get(16).getDayString());
+        days.add(weatherDataObj.get(24).getDayString());
+        days.add(weatherDataObj.get(32).getDayString());
+
         int daysCount = 0;
 
         // Array for Israel Cities and beaches
